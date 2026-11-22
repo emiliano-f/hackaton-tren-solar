@@ -21,6 +21,7 @@ function FlyToSelected({ zone }: { zone: MonitoredZone | undefined }) {
   const lng = zone?.location.lng
   useEffect(() => {
     if (lat === undefined || lng === undefined) return
+    map.closePopup()
     map.flyTo([lat, lng], Math.max(map.getZoom(), FOCUS_ZOOM), { duration: 0.6 })
   }, [map, lat, lng])
   return null

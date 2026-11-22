@@ -25,10 +25,17 @@ export function SentinelSeriesChart({ series, closureDate }: Props) {
           <XAxis dataKey="date" tick={{ fill: '#64748b', fontSize: 10 }} ticks={yearTicks} tickFormatter={date => String(date).slice(0, 4)} interval="preserveStartEnd" minTickGap={8} />
           <YAxis tick={{ fill: '#64748b', fontSize: 10 }} width={48} unit=" ha" />
           <Tooltip
-            labelFormatter={label => formatMonth(String(label))}
-            formatter={(value: number, _name, item) => {
-              const point = item.payload as ZoneObservation
-              return [`${numberFormat.format(value)} ha · NDVI ${numberFormat.format(point.ndvi)} · BSI ${numberFormat.format(point.bsi)}`, 'Superficie perturbada']
+            wrapperStyle={{ maxWidth: 200 }}
+            content={({ active, payload, label }) => {
+              const point = payload?.[0]?.payload as ZoneObservation | undefined
+              if (!active || !point) return null
+              return (
+                <div className="rounded border border-slate-200 bg-white px-2 py-1 text-xs shadow">
+                  <p className="font-semibold">{formatMonth(String(label))}</p>
+                  <p>Superficie perturbada: {numberFormat.format(point.value)} ha</p>
+                  <p>NDVI {numberFormat.format(point.ndvi)} · BSI {numberFormat.format(point.bsi)}</p>
+                </div>
+              )
             }}
           />
           {closure && <ReferenceLine x={closure} stroke="#64748b" strokeDasharray="4 3" label={{ value: 'Cierre', fontSize: 10, fill: '#475569', position: 'insideTopRight' }} />}
