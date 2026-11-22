@@ -1,4 +1,5 @@
 import { demoReports, demoZones } from './demoData'
+import sentinelZones from './sentinelZones.json'
 import type { EnvironmentalReport, Intervention, MonitoredZone } from './types'
 
 const REPORTS_KEY = 'jujuy-environment-reports-v1'
@@ -20,7 +21,7 @@ export function updateReport(id: string, changes: Partial<Pick<EnvironmentalRepo
   if (index < 0) return undefined
   reports[index] = { ...reports[index], ...changes }; write(REPORTS_KEY, reports); return reports[index]
 }
-export function getZones(): MonitoredZone[] { return demoZones }
+export function getZones(): MonitoredZone[] { return [...demoZones, ...(sentinelZones as MonitoredZone[])] }
 export function getInterventions(): Intervention[] { return read(INTERVENTIONS_KEY, []) }
 export function createIntervention(input: Omit<Intervention, 'id' | 'createdAt'>): Intervention {
   const intervention = { ...input, id: crypto.randomUUID(), createdAt: new Date().toISOString() }
