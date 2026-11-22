@@ -1,4 +1,7 @@
 import type { MonitoredZone } from '../../shared/types'
+import { SENTINEL_COLOR } from './sentinelAssets'
+import { SentinelBadge } from './SentinelBadge'
+import { SimulatedBadge } from './SimulatedBadge'
 import { formatDate, formatDelta, formatValue, getZoneChange, trendColor, trendLabel, trendSymbol } from './zoneTrend'
 
 interface Props {
@@ -34,6 +37,7 @@ export function ZoneComparison({ zones, selectedId, onSelect }: Props) {
         const change = getZoneChange(zone)
         const max = Math.max(zone.previousValue, zone.currentValue, zone.unit === '%' ? 100 : 0)
         const isSelected = zone.id === selectedId
+        const color = zone.simulated ? trendColor[change.trend] : SENTINEL_COLOR
         return (
           <li key={zone.id}>
             <button
@@ -46,14 +50,15 @@ export function ZoneComparison({ zones, selectedId, onSelect }: Props) {
                 <div>
                   <p className="font-semibold">{zone.name}</p>
                   <p className="text-xs text-slate-500">{zone.indicator}</p>
+                  <div className="mt-1">{zone.simulated ? <SimulatedBadge /> : <SentinelBadge />}</div>
                 </div>
-                <span className="whitespace-nowrap text-sm font-semibold" style={{ color: trendColor[change.trend] }}>
+                <span className="whitespace-nowrap text-sm font-semibold" style={{ color }}>
                   {trendSymbol[change.trend]} {trendLabel[change.trend]}
                 </span>
               </div>
               <div className="mt-3 space-y-1.5">
                 <Bar label="Anterior" value={zone.previousValue} max={max} unit={zone.unit} color="#94a3b8" />
-                <Bar label="Actual" value={zone.currentValue} max={max} unit={zone.unit} color={trendColor[change.trend]} />
+                <Bar label="Actual" value={zone.currentValue} max={max} unit={zone.unit} color={color} />
               </div>
               <p className="mt-2 text-xs text-slate-600">
                 Variación: <span className="font-medium tabular-nums">{formatDelta(change, zone.unit)}</span> · Observado el {formatDate(zone.observedAt)}
