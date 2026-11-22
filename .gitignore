@@ -8,3 +8,4 @@ dist/
 *.tsbuildinfo
 .codex/
 data/sentinel/cache/
+.venv-sentinel/
