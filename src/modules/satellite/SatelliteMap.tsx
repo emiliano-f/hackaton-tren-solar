@@ -1,7 +1,8 @@
-import { useEffect } from 'react'
-import { CircleMarker, MapContainer, Popup, TileLayer, Tooltip, useMap } from 'react-leaflet'
+import { Fragment, useEffect } from 'react'
+import { CircleMarker, MapContainer, Polygon, Popup, TileLayer, Tooltip, useMap } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import type { MonitoredZone } from '../../shared/types'
+import { SENTINEL_COLOR } from './sentinelAssets'
 import { formatDate, formatDelta, formatValue, getZoneChange, trendColor, trendLabel, trendSymbol } from './zoneTrend'
 
 const JUJUY_CENTER: [number, number] = [-23.3, -65.4]
@@ -20,6 +21,7 @@ function FlyToSelected({ zone }: { zone: MonitoredZone | undefined }) {
   const lng = zone?.location.lng
   useEffect(() => {
     if (lat === undefined || lng === undefined) return
+    map.closePopup()
     map.flyTo([lat, lng], Math.max(map.getZoom(), FOCUS_ZOOM), { duration: 0.6 })
   }, [map, lat, lng])
   return null
@@ -41,18 +43,26 @@ export function SatelliteMap({ zones, selectedId, onSelect }: Props) {
       />
       {zones.map(zone => {
         const change = getZoneChange(zone)
-        const color = trendColor[change.trend]
+        const color = zone.simulated ? trendColor[change.trend] : SENTINEL_COLOR
         const isSelected = zone.id === selectedId
         return (
+          <Fragment key={zone.id}>
+          {zone.polygon && (
+            <Polygon
+              positions={zone.polygon.map(([lat, lng]) => [lat, lng] as [number, number])}
+              pathOptions={{ color: '#ca8a04', weight: 2, fillOpacity: 0.15 }}
+              eventHandlers={{ click: () => onSelect(zone.id) }}
+            />
+          )}
           <CircleMarker
-            key={zone.id}
             center={[zone.location.lat, zone.location.lng]}
             radius={isSelected ? 14 : 10}
             pathOptions={{
-              color: isSelected ? '#0f172a' : color,
+              color: isSelected ? '#0f172a' : zone.simulated ? color : '#ffffff',
               fillColor: color,
-              fillOpacity: isSelected ? 0.85 : 0.6,
-              weight: isSelected ? 4 : 2,
+              fillOpacity: isSelected ? 0.85 : zone.simulated ? 0.6 : 0.9,
+              weight: isSelected ? 4 : zone.simulated ? 2 : 3,
+              dashArray: zone.simulated ? '4 3' : undefined,
             }}
             eventHandlers={{ click: () => onSelect(zone.id) }}
           >
@@ -67,10 +77,13 @@ export function SatelliteMap({ zones, selectedId, onSelect }: Props) {
                   {trendSymbol[change.trend]} {trendLabel[change.trend]}: <span className="tabular-nums">{formatDelta(change, zone.unit)}</span>
                 </p>
                 <p className="text-xs text-slate-500">Observado el {formatDate(zone.observedAt)}</p>
-                {zone.simulated && <p className="text-xs font-semibold uppercase text-amber-700">Dato simulado</p>}
+                {zone.simulated
+                  ? <p className="text-xs font-semibold uppercase text-amber-700">Dato simulado</p>
+                  : <p className="text-xs font-semibold uppercase text-sky-700">Sentinel-2 · estimado</p>}
               </div>
             </Popup>
           </CircleMarker>
+          </Fragment>
         )
       })}
       <FlyToSelected zone={selected} />

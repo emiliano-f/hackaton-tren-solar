@@ -7,3 +7,5 @@ dist/
 *.local
 *.tsbuildinfo
 .codex/
+data/sentinel/cache/
+.venv-sentinel/

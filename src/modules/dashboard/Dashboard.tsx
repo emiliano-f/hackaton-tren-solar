@@ -96,12 +96,12 @@ export default function Dashboard() {
 
       <div className="mt-5 flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm leading-6 text-amber-900" role="note">
         <span aria-hidden="true" className="mt-0.5 font-bold">ⓘ</span>
-        <p><strong>Prototipo demostrativo.</strong> Los indicadores de las zonas son simulados y los reportes precargados son ejemplos. Los reportes nuevos y las intervenciones se guardan en este navegador.</p>
+        <p><strong>Prototipo demostrativo.</strong> Los indicadores de las zonas demo son simulados; los sitios Sentinel-2 son indicadores satelitales estimados, no detecciones de residuos. Los reportes precargados son ejemplos. Los reportes nuevos y las intervenciones se guardan en este navegador.</p>
       </div>
 
       <section aria-label="Indicadores generales" className="mt-7 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-5">
         {[
-          { label: 'Zonas monitoreadas', value: zones.length, detail: 'Indicadores simulados', color: 'text-emerald-700' },
+          { label: 'Zonas monitoreadas', value: zones.length, detail: zones.some(zone => !zone.simulated) ? 'Simulados + Sentinel-2 estimados' : 'Indicadores simulados', color: 'text-emerald-700' },
           { label: 'Reportes totales', value: reports.length, detail: 'Incluye ejemplos', color: 'text-slate-900' },
           { label: 'Reportes abiertos', value: openReports, detail: 'Pendientes de resolución', color: 'text-sky-700' },
           { label: 'Alertas prioritarias', value: alerts.length, detail: 'Altas o críticas sin resolver', color: 'text-rose-700' },
@@ -121,7 +121,7 @@ export default function Dashboard() {
             </label>}
           </div>
           {chartData.length > 0 ? <>
-            <p className="mt-6 text-xs font-medium text-slate-500">{activeIndicator} · datos simulados</p>
+            <p className="mt-6 text-xs font-medium text-slate-500">{activeIndicator} · {chartZones.every(zone => zone.simulated) ? 'datos simulados' : 'indicador satelital estimado (Sentinel-2)'}</p>
             <div className="mt-3 h-64 w-full sm:h-72" role="img" aria-label={`Comparación de valores anteriores y actuales para ${chartZones.map(zone => zone.name).join(', ')}`}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={chartData} margin={{ top: 10, right: 8, left: -20, bottom: 8 }} barGap={4}>
@@ -138,7 +138,7 @@ export default function Dashboard() {
           </> : <p className="mt-8 rounded-xl bg-slate-50 p-5 text-sm text-slate-500">Todavía no hay zonas para comparar.</p>}
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             {zones.map(zone => <article key={zone.id} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-              <div className="flex items-start justify-between gap-2"><h3 className="font-semibold text-slate-900">{zone.name}</h3><Badge className="bg-emerald-100 text-emerald-800">Simulado</Badge></div>
+              <div className="flex items-start justify-between gap-2"><h3 className="font-semibold text-slate-900">{zone.name}</h3>{zone.simulated ? <Badge className="bg-emerald-100 text-emerald-800">Simulado</Badge> : <Badge className="bg-sky-100 text-sky-800">Sentinel-2 · estimado</Badge>}</div>
               <p className="mt-1 text-xs text-slate-500">{zone.indicator}</p>
               <p className="mt-3 text-lg font-bold tabular-nums">{zone.currentValue} <span className="text-sm font-normal text-slate-500">{zone.unit} actual · {zone.previousValue} {zone.unit} anterior</span></p>
               <p className="mt-1 text-xs text-slate-500">Observado: {formatDate(zone.observedAt)}</p>

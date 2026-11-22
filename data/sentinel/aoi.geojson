@@ -1,0 +1,198 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "s2-el-pongo",
+        "name": "Centro Ambiental Jujuy (El Pongo, Perico)",
+        "role": "principal",
+        "status": "activo",
+        "mgrsTile": "MGRS-20KKU",
+        "referenceYear": 2018,
+        "locationSource": "OpenStreetMap nodo 13519796351 'GIRSU JUJUY S.E CENTRO AMBIENTAL JUJUY' (-24.296296, -65.157092). Polígono digitalizado a mano sobre el compuesto color natural S2A_T20KKU_20260915 (10 m); no es el límite catastral.",
+        "confidence": "media",
+        "notes": "Predio operado por GIRSU Jujuy S.E. que recibe residuos del Valle (somosjujuy.com.ar, 2025-08-02). Celdas y playa de maniobras visibles en Sentinel-2."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -65.160256,
+              -24.297158
+            ],
+            [
+              -65.159249,
+              -24.295818
+            ],
+            [
+              -65.158053,
+              -24.295022
+            ],
+            [
+              -65.155595,
+              -24.295238
+            ],
+            [
+              -65.154124,
+              -24.29562
+            ],
+            [
+              -65.152648,
+              -24.295731
+            ],
+            [
+              -65.150692,
+              -24.296571
+            ],
+            [
+              -65.149436,
+              -24.298034
+            ],
+            [
+              -65.150053,
+              -24.299559
+            ],
+            [
+              -65.151039,
+              -24.299636
+            ],
+            [
+              -65.152689,
+              -24.298168
+            ],
+            [
+              -65.155143,
+              -24.297682
+            ],
+            [
+              -65.156128,
+              -24.297668
+            ],
+            [
+              -65.158108,
+              -24.298272
+            ],
+            [
+              -65.15959,
+              -24.298521
+            ],
+            [
+              -65.160564,
+              -24.297876
+            ],
+            [
+              -65.160256,
+              -24.297158
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "s2-san-pedro",
+        "name": "Ex basural municipal de San Pedro de Jujuy",
+        "role": "contraste",
+        "status": "activo",
+        "mgrsTile": "MGRS-20KLU",
+        "referenceYear": 2022,
+        "locationSource": "OpenStreetMap way 636502526 'Basural San Pedro' (3,2 ha). Polígono ampliado a mano para cubrir todo el suelo removido visible en S2A_T20KLU_20221223 (antes del cierre).",
+        "closureDate": "2023-01-31",
+        "closureSource": "Municipalidad de San Pedro de Jujuy, 'Cierran definitivamente el basural municipal' (2023-01-30), https://sanpedrodejujuy.gob.ar/cierran-definitivamente-el-basural-municipal/ ; El Tribuno de Jujuy, 'Hoy cierran definitivamente un basural' (2023-01-31), https://eltribunodejujuy.com/nota/2023-1-31-1-0-0-hoy-cierran-definitivamente-un-basural",
+        "confidence": "media",
+        "notes": "Cierre anunciado con murallones de tierra. Hay notas posteriores sobre limpieza de microbasurales en accesos; no se verificó si hubo nuevos vuelcos dentro del predio."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -64.878717,
+              -24.211124
+            ],
+            [
+              -64.878025,
+              -24.210952
+            ],
+            [
+              -64.877042,
+              -24.211054
+            ],
+            [
+              -64.87636,
+              -24.211514
+            ],
+            [
+              -64.875876,
+              -24.212062
+            ],
+            [
+              -64.87608,
+              -24.212601
+            ],
+            [
+              -64.876288,
+              -24.213321
+            ],
+            [
+              -64.876102,
+              -24.214045
+            ],
+            [
+              -64.876309,
+              -24.214765
+            ],
+            [
+              -64.876908,
+              -24.215299
+            ],
+            [
+              -64.877889,
+              -24.215107
+            ],
+            [
+              -64.878674,
+              -24.214917
+            ],
+            [
+              -64.879355,
+              -24.214366
+            ],
+            [
+              -64.87944,
+              -24.213462
+            ],
+            [
+              -64.879036,
+              -24.212745
+            ],
+            [
+              -64.878828,
+              -24.212025
+            ],
+            [
+              -64.878717,
+              -24.211124
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "s2-abra-pampa",
+        "name": "Basural de Abra Pampa (Puna)",
+        "role": "opcional",
+        "status": "descartado",
+        "locationSource": "Sin ubicación verificable: OpenStreetMap no tiene ningún landuse=landfill ni amenity=waste_disposal cerca de Abra Pampa (consulta Overpass 2026-11-22) y las notas de prensa solo dicen 'a pocos kilómetros del ingreso al pueblo, sobre la ruta'.",
+        "confidence": "baja",
+        "notes": "Sin polígono no se puede comprobar si mide más de 3-4 píxeles de 10 m por lado. Se descarta en lugar de forzar un resultado."
+      },
+      "geometry": null
+    }
+  ]
+}

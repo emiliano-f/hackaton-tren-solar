@@ -1,0 +1,5 @@
+numpy==2.4.6
+Pillow==13.0.0
+pystac-client==0.9.1
+rasterio==1.4.4
+shapely==2.2.0
