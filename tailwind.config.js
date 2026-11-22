@@ -1,6 +1,8 @@
 /** Tokens del sistema visual (salida de Stitch, con contraste AA verificado). */
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
+  // Clases armadas con el valor del estado o la prioridad: `pill status-${report.status}`.
+  safelist: [{ pattern: /^(status|priority)-(new|reviewing|in_progress|resolved|low|medium|high|critical)$/ }],
   theme: {
     extend: {
       colors: {
