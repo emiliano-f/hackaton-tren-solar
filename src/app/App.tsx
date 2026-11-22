@@ -38,7 +38,7 @@ export default function App() {
   return (
     <div className="app-shell">
       <div className="demo-banner" role="status">
-        <strong>Datos demostrativos.</strong> Las zonas y reportes precargados son simulados, no observaciones satelitales reales.
+        <strong>Datos demostrativos.</strong> Las zonas demo y los reportes precargados son simulados. Los sitios Sentinel-2 son indicadores satelitales estimados.
       </div>
       <header className="app-header">
         <div className="app-header-inner">
