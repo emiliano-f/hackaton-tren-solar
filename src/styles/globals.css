@@ -1,21 +1,70 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body { @apply bg-slate-50 text-slate-900; }
 
+body { @apply bg-sand font-sans text-slate-900 antialiased; }
+
+/*
+ * Sistema visual compartido (ver src/styles/DESIGN.md).
+ * Los módulos pueden usar estas clases o las utilidades equivalentes de Tailwind.
+ */
 @layer components {
+  /* Estructura de la app */
   .app-shell { @apply flex min-h-screen flex-col; }
-  .demo-banner { @apply bg-amber-100 px-4 py-2 text-center text-sm text-amber-900 border-b border-amber-300; }
-  .app-header { @apply sticky top-0 z-[1100] border-b border-slate-200 bg-white/95 backdrop-blur; }
-  .app-header-inner { @apply mx-auto flex max-w-6xl flex-col gap-3 px-4 py-3 md:flex-row md:items-center md:justify-between; }
-  .app-nav { @apply grid grid-cols-4 gap-1 rounded-lg bg-slate-100 p-1 md:flex; }
-  .nav-tab { @apply rounded-md px-2 py-2 text-center text-sm font-medium text-slate-600 transition-colors hover:bg-white hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 sm:px-4; }
-  .nav-tab[aria-current='page'] { @apply bg-emerald-600 text-white shadow-sm hover:bg-emerald-600 hover:text-white; }
-  .app-main { @apply mx-auto w-full max-w-6xl flex-1 px-4 py-6; }
-  .app-footer { @apply border-t border-slate-200 py-4 text-center text-xs text-slate-500; }
+  .demo-banner { @apply border-b border-amber-200 bg-amber-50 px-4 py-1.5 text-center text-xs leading-5 text-amber-900 sm:text-sm; }
+  .app-header { @apply sticky top-0 z-[1100] border-b border-slate-200 bg-sand/95 backdrop-blur-md; }
+  .app-header-inner { @apply mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 md:px-6; }
+  .app-brand { @apply flex min-w-0 items-center gap-3; }
+  .app-brand-mark { @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-700 text-white; }
+  .app-nav { @apply hidden gap-1 rounded-xl border border-slate-200 bg-white p-1 shadow-card md:flex; }
+  .nav-tab { @apply inline-flex min-h-[40px] items-center gap-2 rounded-lg px-4 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2; }
+  .nav-tab[aria-current='page'] { @apply bg-emerald-700 text-white hover:bg-emerald-700 hover:text-white; }
+  .app-main { @apply mx-auto w-full max-w-6xl flex-1 px-4 pb-28 pt-6 md:px-6 md:pb-10; }
+  .app-footer { @apply hidden border-t border-slate-200 py-4 text-center text-xs text-slate-500 md:block; }
+  .bottom-nav { @apply fixed inset-x-0 bottom-0 z-[1100] grid grid-cols-4 border-t border-slate-300 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden; }
+  .bottom-tab { @apply flex min-h-[60px] flex-col items-center justify-center gap-1 text-[11px] font-semibold text-slate-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-emerald-600; }
+  .bottom-tab[aria-current='page'] { @apply text-emerald-700; }
+
+  /* Superficies y títulos */
+  .card { @apply rounded-2xl border border-slate-200 bg-white p-5 shadow-card; }
+  .eyebrow { @apply text-[11px] font-bold uppercase leading-[14px] tracking-[0.08em] text-terracotta-700; }
+  .section-title { @apply text-lg font-semibold tracking-tight text-slate-900; }
+  .page-title { @apply text-[28px] font-bold leading-[34px] tracking-tight text-slate-900 md:text-[36px] md:leading-[44px]; }
+  .page-lead { @apply text-sm leading-6 text-slate-600 md:text-base; }
+
+  /* Botones (44 px de alto mínimo) */
+  .btn-primary { @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg bg-emerald-700 px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60; }
+  .btn-secondary { @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 disabled:opacity-60; }
+  .btn-ghost { @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-lg px-3 text-sm font-semibold text-slate-800 hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600; }
+
+  /* Formularios */
+  .field-label { @apply text-sm font-semibold text-slate-900; }
+  .field-hint { @apply text-xs text-slate-500; }
+  .field-input { @apply mt-1.5 block min-h-[44px] w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:border-emerald-600 focus:outline-none focus:ring-1 focus:ring-emerald-600 aria-[invalid=true]:border-rose-500; }
+  .field-error { @apply mt-1.5 text-sm font-medium text-rose-700; }
+
+  /* Pastillas: estado, prioridad y etiquetas de datos */
+  .pill { @apply inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold; }
+  .status-new { @apply border-sky-200 bg-sky-50 text-sky-700; }
+  .status-reviewing { @apply border-violet-200 bg-violet-50 text-violet-700; }
+  .status-in_progress { @apply border-amber-200 bg-amber-50 text-amber-700; }
+  .status-resolved { @apply border-emerald-200 bg-emerald-50 text-emerald-700; }
+  .priority-low { @apply border-transparent bg-slate-100 text-slate-600; }
+  .priority-medium { @apply border-transparent bg-amber-100 text-amber-800; }
+  .priority-high { @apply border-transparent bg-orange-100 text-orange-700; }
+  .priority-critical { @apply border-transparent bg-rose-100 text-rose-700; }
+  .tag-demo { @apply border-amber-200 bg-amber-50 text-amber-800; }
+  .tag-simulated { @apply border-terracotta-100 bg-terracotta-50 text-terracotta-700; }
+
+  /* Tendencias de indicadores (siempre con flecha además del color) */
+  .trend-up { @apply inline-flex items-center gap-1 rounded bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-700; }
+  .trend-down { @apply inline-flex items-center gap-1 rounded bg-rose-50 px-2 py-0.5 text-xs font-semibold text-rose-700; }
+  .trend-flat { @apply inline-flex items-center gap-1 rounded bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600; }
 }
 
 @media print {
-  .app-header { position: static; border: 0; }
-  .app-nav, .app-footer { display: none; }
+  body { background: #fff; }
+  .app-header { position: static; border: 0; background: #fff; }
+  .app-nav, .bottom-nav, .app-footer { display: none; }
+  .app-main { padding-bottom: 0; }
 }
