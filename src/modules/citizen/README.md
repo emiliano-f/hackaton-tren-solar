@@ -12,6 +12,10 @@ import { CitizenReportModule } from '../modules/citizen'
 
 El componente no recibe props y no modifica `src/shared` ni `src/app`.
 
+## Diseño
+
+Usa las clases compartidas de `src/styles/globals.css` (ver `src/styles/DESIGN.md`): tarjetas por bloque, categorías como botones con ícono (radios accesibles), botón principal ancho y pastillas de estado y prioridad en el historial. Los íconos son SVG propios en `icons.tsx`.
+
 ## Comportamiento
 
 - Campos obligatorios: título (5–80), categoría, descripción (15–600) y ubicación.
